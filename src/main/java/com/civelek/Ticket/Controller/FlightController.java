@@ -3,6 +3,7 @@ package com.civelek.Ticket.Controller;
 import com.civelek.Ticket.Entity.Flight;
 import com.civelek.Ticket.IService.IFlightImpl;
 import com.civelek.Ticket.util.VTUtil;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.JSONObject;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/flight")
@@ -47,11 +49,15 @@ public class FlightController {
 
     @GetMapping("/getFlight")
     @ResponseBody
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss.SSSSSS")
     public void getFlight(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        String departaure = VTUtil.reqGetString(request.getParameter("departaure"),null);
+        String arrival = VTUtil.reqGetString(request.getParameter("arrival"),null);
+        String companyName = VTUtil.reqGetString(request.getParameter("companyName"),null);
         Date departaureDate = VTUtil.reqGetDate(request.getParameter("departaureDate"),null,VTUtil.strDateFormatVadegmecum);
         Date arrivalDate = VTUtil.reqGetDate(request.getParameter("arrivalDate"),null,VTUtil.strDateFormatVadegmecum);
         JSONObject sendJson = new JSONObject();
-        Flight flight = iFlight.getFlight(departaureDate, arrivalDate );
+        List<Flight> flight = iFlight.getFlight(companyName, departaure, arrival, departaureDate, arrivalDate );
 
         sendJson.put("flight",flight);
         response.getWriter().write(sendJson.toString());

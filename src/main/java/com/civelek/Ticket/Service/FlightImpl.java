@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 @Service
@@ -30,14 +31,6 @@ public class FlightImpl implements IFlightImpl {
         if(flight == null ){
             throw new IllegalArgumentException("Ucus bilgileri boş gecilemez");
         }else{
-
-            /*Calendar calendar = Calendar.getInstance();
-            calendar.setTime(flight.getArrivalDate());
-            calendar.add(5,Cale);
-            Date date = flight.getArrivalDate();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss a");
-            SimpleDateFormat format = DATE_FORMAT;
-            String string = format.format(date);*/
             // aynı havalimanında 5 dakika içinde ucus var mı?
             newFlight.setCompany(flight.getCompany());
             newFlight.setPrice(flight.getPrice());
@@ -45,7 +38,6 @@ public class FlightImpl implements IFlightImpl {
             newFlight.setRoute(flight.getRoute());
             newFlight.setStatus(true);
             newFlight.setCreatedAt(new Date());
-
 
             newFlight.setArrivalDate(flight.getArrivalDate());
             newFlight.setDepartureDate(flight.getDepartureDate());
@@ -69,11 +61,10 @@ public class FlightImpl implements IFlightImpl {
     }
 
     @Override
-    public Flight getFlight(Date departureDate, Date arrivalDate) {
-        Flight flight = null;
-        if (departureDate != null &&  arrivalDate != null) {
-            flight = ticketDAO.getFlight(departureDate, arrivalDate);
-        }
+    public List<Flight> getFlight(String company,String departaure, String arrival, Date departureDate, Date arrivalDate) {
+        List<Flight> flight = null;
+
+        flight = ticketDAO.getFlight(company, departaure, arrival, departureDate, arrivalDate);
 
         return flight;
     }

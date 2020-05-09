@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class RouteImpl implements IRouteImpl {
@@ -53,9 +54,9 @@ public class RouteImpl implements IRouteImpl {
     }
 
     @Override
-    public Route getRoute(Long routeId, String depertureName, String arrivalName) {
+    public List<Route> getRoute(Long routeId, String depertureName, String arrivalName) {
 
-        Route route = ticketDAO.getRoute(routeId, depertureName, arrivalName);
+        List<Route> route = ticketDAO.getRoute(routeId, depertureName, arrivalName);
         return route;
     }
 }

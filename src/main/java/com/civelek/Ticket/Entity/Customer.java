@@ -45,7 +45,6 @@ public class Customer extends BaseEntity{
     private String email;
 
     @Column(name = "phone")
-    @Pattern(regexp = "[0-9\\s]{12}", message = "Gerçersiz")
     private String phone;
 
     public long getCustomerId() {

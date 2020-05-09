@@ -2,15 +2,21 @@ package com.civelek.Ticket.Controller;
 
 import com.civelek.Ticket.Entity.Company;
 import com.civelek.Ticket.Entity.Customer;
+import com.civelek.Ticket.Entity.Flight;
 import com.civelek.Ticket.Entity.Ticket;
 import com.civelek.Ticket.IService.ITicketImpl;
+import com.civelek.Ticket.util.VTUtil;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/ticket")
@@ -33,9 +39,13 @@ public class TicketController {
 
     @GetMapping("/getTicket")
     @ResponseBody
-    public ResponseEntity<Ticket> getTicketByPnrNo(@RequestParam String pnr){
-        Ticket ticket =  iTicketImpl.getTicketByPnrNo(pnr);
-        return new ResponseEntity<>(ticket, HttpStatus.OK);
+    public void getTicketByPnrNo(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String pnr = VTUtil.reqGetString(request.getParameter("pnr"),null);
+        JSONObject sendJson = new JSONObject();
+        Ticket ticket = iTicketImpl.getTicketByPnrNo(pnr);
+
+        sendJson.put("ticket",ticket);
+        response.getWriter().write(sendJson.toString());
     }
 
 
@@ -44,18 +54,5 @@ public class TicketController {
         return ResponseEntity.ok(iTicketImpl.deleteTicket(pnr));
     }
 
-    @GetMapping("/getTicketString")
-    @ResponseBody
-    public String getByPnrNoToString(@RequestParam String pnr){
-        String ticket =  iTicketImpl.getTicketByPnrNoToString(pnr);
-        return ticket;
-    }
-
-    @GetMapping("/getTicketJson")
-    @ResponseBody
-    public JSONObject getTicketByPnrNoToJson(@RequestParam String pnr){
-        JSONObject ticket =  iTicketImpl.getTicketByPnrNoToJson(pnr);
-        return ticket;
-    }
 
 }

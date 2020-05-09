@@ -44,9 +44,6 @@ public class TicketImpl implements ITicketImpl {
             if(ticket == null){
                 throw new IllegalArgumentException("Bilet bilgileri boş olamaz");
             }else {
-
-                //kontenjan kontrolu yap.kontenjanı azalt
-
                 if (ticket.getFlight() != null && flightRepository.getByFlightId(ticket.getFlight().getFlightId()) != null) {
                     flight = flightRepository.getByFlightId(ticket.getFlight().getFlightId());
                     quato = flight.getQuota();
@@ -96,7 +93,6 @@ public class TicketImpl implements ITicketImpl {
 
             }
 
-
         }catch (Exception e){
             e.getMessage();
         }
@@ -112,11 +108,10 @@ public class TicketImpl implements ITicketImpl {
         String cardNo = ticket.getCreditCard();
         String newCardNo = "";
 
-        if(ticket.getCreditCard() != null){
+        if (ticket.getCreditCard() != null) {
             newCardNo = VTUtil.replaceText(cardNo);
 
-             newCardNo = VTUtil.convertCreditCardSecurtiy(newCardNo,6,4);
-            //newCardNo = newCardNo.substring(0,6) + "******" +newCardNo.substring(12,15);
+            newCardNo = VTUtil.convertCreditCardSecurtiy(newCardNo, 6, 4);
         }
 
 
@@ -127,7 +122,6 @@ public class TicketImpl implements ITicketImpl {
 
         return json;
     }
-
 
     /**
      * Bilet numarasına gore bilet araması yapar
@@ -152,7 +146,6 @@ public class TicketImpl implements ITicketImpl {
 
              ticketRepository.delete(ticket);
              return  true;
-
          }
 
         return false;
@@ -169,7 +162,6 @@ public class TicketImpl implements ITicketImpl {
         JSONObject ticket = ticketDAO.getTicketByPnrNoToJson(pnr);
         return ticket;
     }
-
 
     public  String createPnr(int counter) {
         StringBuilder builder = new StringBuilder();

@@ -3,16 +3,21 @@ package com.civelek.Ticket.Service;
 import com.civelek.Ticket.Entity.Customer;
 import com.civelek.Ticket.IService.ICustomerImpl;
 import com.civelek.Ticket.Repository.CustomerRepository;
+import com.civelek.Ticket.Repository.TicketDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CustomerImpl implements ICustomerImpl {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private TicketDAO ticketDAO;
 
     @Override
     public Customer saveCustomer(Customer customer) {
@@ -45,5 +50,12 @@ public class CustomerImpl implements ICustomerImpl {
         }
 
         return customerRepository.save(newCustomer);
+    }
+
+    @Override
+    public List<Customer> getCustomer(String kimlikNo, String customerName, String customerSurname, String phone) {
+
+        List<Customer> customers = ticketDAO.getCustomer(kimlikNo, customerName, customerSurname, phone);
+        return customers;
     }
 }

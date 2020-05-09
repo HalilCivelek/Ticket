@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/route")
@@ -38,7 +39,7 @@ public class RouteController {
         String arrivalName = VTUtil.reqGetString(request.getParameter("arrivalName"),null);
 
         JSONObject sendJson = new JSONObject();
-        Route route = routeImpl.getRoute(routeId, departureName, arrivalName);
+       List<Route> route = routeImpl.getRoute(routeId, departureName, arrivalName);
 
         sendJson.put("route",route);
         response.getWriter().write(sendJson.toString());

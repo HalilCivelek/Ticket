@@ -6,6 +6,7 @@ import com.civelek.Ticket.Entity.Route;
 import net.minidev.json.JSONObject;
 
 import java.util.Date;
+import java.util.List;
 
 public interface IFlightImpl {
 
@@ -17,7 +18,7 @@ public interface IFlightImpl {
      * İlgili tarihlerder ucus var mı?
      * @return
      */
-    Flight getFlight(Date departaureDate, Date arrivalDate);
+    List<Flight> getFlight(String company, String departaure, String arrival, Date departureDate, Date arrivalDate);
 
 
     /**
