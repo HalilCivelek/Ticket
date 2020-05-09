@@ -1,6 +1,5 @@
 package com.civelek.Ticket.Service;
 
-import com.civelek.Ticket.Entity.Company;
 import com.civelek.Ticket.Entity.Flight;
 import com.civelek.Ticket.IService.IFlightImpl;
 import com.civelek.Ticket.Repository.FlightRepository;
@@ -8,11 +7,8 @@ import com.civelek.Ticket.Repository.TicketDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 @Service
@@ -81,4 +77,25 @@ public class FlightImpl implements IFlightImpl {
 
         return flight;
     }
+
+    @Override
+    public Flight updateFlight(Long flightId, Long quota) {
+
+        Flight flight = flightRepository.getByFlightId(flightId);
+
+        if(flight != null){
+            Long newQuta = (flight.getQuota()*quota)/100 + flight.getQuota();
+            flight.setQuota(newQuta);
+
+            Long newPrice = (flight.getPrice()*quota)/100 + flight.getPrice();
+            flight.setPrice(newPrice);
+            flight.setUpdatedAt(new Date());
+
+            return flightRepository.save(flight);
+        }
+
+        System.out.println("Guncellenecek ucus bilgisi bulunamadi.");
+        return null;
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.civelek.Ticket.Repository;
 
 import com.civelek.Ticket.Entity.Flight;
+import com.civelek.Ticket.Entity.Route;
 import com.civelek.Ticket.Entity.Ticket;
 import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Repository;
@@ -20,7 +21,7 @@ public class TicketDAO {
         return entityManager;
     }
 
-    public Ticket deneme(String pnr){
+    public Ticket getTicketByPnrNo(String pnr){
 
         StringBuilder hql = new StringBuilder();
 
@@ -86,6 +87,44 @@ public class TicketDAO {
         return (Flight) query.getSingleResult();
     }
 
+    /**
+     * Rota bilgilerini getirir.
+     */
+    public Route getRoute(Long routeId, String depertureName, String arrivalName){
 
+        StringBuilder hql = new StringBuilder();
+        JSONObject jsonObject =new JSONObject();
+
+        hql.append("select r from Route r  ");
+        hql.append(" where r.status = true ");
+
+        if(routeId != null){
+            hql.append(" and r.routeId =:routeId ");
+        }
+        if(depertureName != null){
+            hql.append(" and r.departureId.airportName =:depertureName");
+         }
+
+        if(arrivalName != null){
+            hql.append(" and r.arrivalId.airportName =:arrivalName");
+        }
+        Query query = entityManager.createQuery(hql.toString());
+
+        if(routeId != null){
+         query.setParameter("routeId", routeId);
+        }
+
+        if(depertureName != null){
+           query.setParameter("depertureName",depertureName);
+        }
+
+        if (arrivalName != null){
+            query.setParameter("arrivalName", arrivalName);
+        }
+
+        jsonObject.put("data",query.getSingleResult());
+
+        return (Route) query.getSingleResult();
+    }
 
 }

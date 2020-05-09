@@ -6,6 +6,7 @@ import com.civelek.Ticket.IService.ITicketImpl;
 import com.civelek.Ticket.Repository.FlightRepository;
 import com.civelek.Ticket.Repository.TicketDAO;
 import com.civelek.Ticket.Repository.TicketRepository;
+import com.civelek.Ticket.util.VTUtil;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,7 +60,7 @@ public class TicketImpl implements ITicketImpl {
                 }
 
                 while (isPnr) {
-                    pnr = createPnr(5);
+                    pnr = "PNR" + createPnr(5);
                     pnrControl = ticketRepository.getByPnrAndStatus(pnr, true);
 
                     if (pnrControl == null) {
@@ -99,7 +100,7 @@ public class TicketImpl implements ITicketImpl {
         }catch (Exception e){
             e.getMessage();
         }
-
+        sendJson.put("PNR numarasi", newTicket.getPnr());
         return sendJson;
     }
 
@@ -112,14 +113,17 @@ public class TicketImpl implements ITicketImpl {
         String newCardNo = "";
 
         if(ticket.getCreditCard() != null){
-            newCardNo = cardNo.replaceAll("\\p{Punct}", "").replaceAll(" ","");
+            newCardNo = VTUtil.replaceText(cardNo);
+
+             newCardNo = VTUtil.convertCreditCardSecurtiy(newCardNo,6,4);
+            //newCardNo = newCardNo.substring(0,6) + "******" +newCardNo.substring(12,15);
         }
 
 
-        String message = newCardNo + "no'lu kredi kartınızdan  "+ flight.getPrice() +" tutarında ödeme alınmıştır.";
+        String message = newCardNo + " no'lu kredi kartınızdan  "+ flight.getPrice() +" tutarında ödeme alınmıştır.";
 
         json.put("creditCardNo",newCardNo);
-        json.put("data",message);
+        json.put("message",message);
 
         return json;
     }
@@ -134,7 +138,7 @@ public class TicketImpl implements ITicketImpl {
     public Ticket getTicketByPnrNo(String pnrNo){
         Ticket ticket = null;
         if (pnrNo != null && !pnrNo.equalsIgnoreCase("")) {
-            ticket = ticketDAO.deneme(pnrNo);
+            ticket = ticketDAO.getTicketByPnrNo(pnrNo);
         }
         return ticket;
     }

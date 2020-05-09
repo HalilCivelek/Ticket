@@ -59,6 +59,26 @@ public class VTUtil {
         return defaultVal;
     }
 
+    public static  String replaceText(String text){
+       String newText = text.replaceAll("\\p{Punct}", "").replaceAll(" ","");
+
+        return newText;
+    }
+
+    public static String convertCreditCardSecurtiy(String creditCard, int left, int right) {
+
+
+        StringBuilder b = new StringBuilder(creditCard.length());
+        b.append(creditCard.substring(0, left));
+        for (int z = 0; z < creditCard.length() - left - right; ++z) {
+            b.append('*');
+        }
+        b.append(creditCard.substring(creditCard.length() - right));
+        String x = b.toString();
+        return x;
+
+
+    }
 
     public static Date saatEkle(Date date, int hours) {
         Calendar calendar = Calendar.getInstance();

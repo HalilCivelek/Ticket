@@ -44,7 +44,6 @@ public class CompanyImpl implements ICompanyImpl {
 
          }
 
-
        }catch (Exception e){
            e.getMessage();
        }

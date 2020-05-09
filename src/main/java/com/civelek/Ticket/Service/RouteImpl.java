@@ -5,6 +5,7 @@ import com.civelek.Ticket.Entity.Route;
 import com.civelek.Ticket.IService.IRouteImpl;
 import com.civelek.Ticket.Repository.AirportRepository;
 import com.civelek.Ticket.Repository.RouteRepository;
+import com.civelek.Ticket.Repository.TicketDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class RouteImpl implements IRouteImpl {
     private RouteRepository routeRepository;
 
     @Autowired
-    private AirportRepository airportRepository;
+    private TicketDAO ticketDAO;
 
     public Route saveRoute( Route route){
 
@@ -49,5 +50,12 @@ public class RouteImpl implements IRouteImpl {
 
            return routeRepository.save(newRoute);
 
+    }
+
+    @Override
+    public Route getRoute(Long routeId, String depertureName, String arrivalName) {
+
+        Route route = ticketDAO.getRoute(routeId, depertureName, arrivalName);
+        return route;
     }
 }

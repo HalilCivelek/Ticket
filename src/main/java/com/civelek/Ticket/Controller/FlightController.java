@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.PostUpdate;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -26,7 +27,7 @@ public class FlightController {
     private IFlightImpl iFlight;
 
     @PostMapping("/saveFlight")
-    public ResponseEntity<Flight> saveCustomer(@Valid @RequestBody Flight flight){
+    public ResponseEntity<Flight> saveFlight(@Valid @RequestBody Flight flight){
         return ResponseEntity.ok(iFlight.saveFlight(flight));
 
     }
@@ -47,7 +48,6 @@ public class FlightController {
     @GetMapping("/getFlight")
     @ResponseBody
     public void getFlight(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        Long flightId = VTUtil.reqGetLong(request.getParameter("flightId"),null);
         Date departaureDate = VTUtil.reqGetDate(request.getParameter("departaureDate"),null,VTUtil.strDateFormatVadegmecum);
         Date arrivalDate = VTUtil.reqGetDate(request.getParameter("arrivalDate"),null,VTUtil.strDateFormatVadegmecum);
         JSONObject sendJson = new JSONObject();
@@ -55,5 +55,18 @@ public class FlightController {
 
         sendJson.put("flight",flight);
         response.getWriter().write(sendJson.toString());
+    }
+
+    @PostMapping("/updateFlight")
+    @ResponseBody
+    public void updateFlight(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        Long flightId = VTUtil.reqGetLong(request.getParameter("flightId"),null);
+        Long quota = VTUtil.reqGetLong(request.getParameter("quota"),null);
+        JSONObject sendJson = new JSONObject();
+        Flight flight = iFlight.updateFlight(flightId, quota);
+
+        sendJson.put("flight",flight);
+        response.getWriter().write(sendJson.toString());
+
     }
 }

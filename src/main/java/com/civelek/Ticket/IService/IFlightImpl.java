@@ -18,4 +18,13 @@ public interface IFlightImpl {
      * @return
      */
     Flight getFlight(Date departaureDate, Date arrivalDate);
+
+
+    /**
+     * Kontenjan artırımı yapıldıgında bilet fiyatı guncellemesi
+     * @param flightId
+     * @param quota
+     * @return
+     */
+    Flight updateFlight(Long flightId, Long quota);
 }
