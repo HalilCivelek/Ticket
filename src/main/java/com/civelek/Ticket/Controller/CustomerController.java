@@ -1,7 +1,6 @@
 package com.civelek.Ticket.Controller;
 
 import com.civelek.Ticket.Entity.Customer;
-import com.civelek.Ticket.Entity.Route;
 import com.civelek.Ticket.IService.ICustomerImpl;
 import com.civelek.Ticket.util.VTUtil;
 import net.minidev.json.JSONObject;

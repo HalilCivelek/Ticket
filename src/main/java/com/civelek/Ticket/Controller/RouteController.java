@@ -1,8 +1,5 @@
 package com.civelek.Ticket.Controller;
 
-import com.civelek.Ticket.Entity.Airport;
-
-import com.civelek.Ticket.Entity.Flight;
 import com.civelek.Ticket.Entity.Route;
 import com.civelek.Ticket.IService.IRouteImpl;
 import com.civelek.Ticket.util.VTUtil;
@@ -15,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 @RestController

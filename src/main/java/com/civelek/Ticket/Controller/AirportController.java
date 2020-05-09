@@ -1,10 +1,7 @@
 package com.civelek.Ticket.Controller;
 
 import com.civelek.Ticket.Entity.Airport;
-import com.civelek.Ticket.Entity.Company;
 import com.civelek.Ticket.IService.IAirportImpl;
-import com.civelek.Ticket.Service.AirportImpl;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
