@@ -23,7 +23,7 @@ public class Airport extends  BaseEntity {
     @Column(name="airport_id")
     private long airportId;
 
-    @Column(name="airport_name")
+    @Column(name="airport_name", nullable = false)
     private String airportName;
 
     @Column(name="city")

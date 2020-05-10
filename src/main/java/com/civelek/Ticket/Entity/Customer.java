@@ -27,13 +27,13 @@ public class Customer extends BaseEntity{
 
 
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "surname")
+    @Column(name = "surname", nullable = false)
     private String surname;
 
-    @Column(name = "kimlik_no")
+    @Column(name = "kimlik_no", nullable = false)
     private String kimlikNo;
 
     @Column(name = "adress")

@@ -22,10 +22,10 @@ public class Flight extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="flight_id")
+    @Column(name="flight_id", nullable = false)
     private long flightId;
 
-    @JoinColumn(name="company_id")
+    @JoinColumn(name="company_id", nullable = false)
     @ManyToOne(fetch= FetchType.LAZY)
     private Company company;
 
@@ -33,19 +33,18 @@ public class Flight extends BaseEntity{
     private  Long quota;
 
 
-    @JoinColumn(name="route_id")
-    @ManyToOne(fetch= FetchType.EAGER)
+    @JoinColumn(name="route_id", nullable = false)
+    @ManyToOne(fetch= FetchType.LAZY)
     private Route route;
 
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private Long price;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "arrival_date")
+    @Column(name = "arrival_date", nullable = false)
     private Date arrivalDate;
 
-    @DateTimeFormat(pattern = "dd/mm/yyyy")
-    @Column(name = "departure_date")
+    @Column(name = "departure_date", nullable = false)
     private Date departureDate;
 
     public long getFlightId() {

@@ -23,14 +23,14 @@ public class Ticket extends BaseEntity{
     @Column(name="ticket_id")
     private long ticketId;
 
-    @Column(name = "PNR")
+    @Column(name = "PNR", nullable = false)
     private String pnr;
 
-    @JoinColumn(name="flight_id")
+    @JoinColumn(name="flight_id", nullable = false)
     @ManyToOne(fetch= FetchType.LAZY)
     private Flight flight;
 
-    @JoinColumn(name="customer_id")
+    @JoinColumn(name="customer_id", nullable = false)
     @ManyToOne(fetch= FetchType.LAZY)
     private Customer customer;
 

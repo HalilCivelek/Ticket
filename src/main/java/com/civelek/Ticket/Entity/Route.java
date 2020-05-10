@@ -26,11 +26,11 @@ public class Route extends BaseEntity{
     @Column(name="route_id")
     private long routeId;
 
-    @JoinColumn(name="departure_id")
+    @JoinColumn(name="departure_id", nullable = false)
     @ManyToOne(fetch= FetchType.LAZY)
     private Airport departureId;
 
-    @JoinColumn(name="arrival_id")
+    @JoinColumn(name="arrival_id", nullable = false)
     @ManyToOne(fetch= FetchType.LAZY)
     private Airport arrivalId;
 
