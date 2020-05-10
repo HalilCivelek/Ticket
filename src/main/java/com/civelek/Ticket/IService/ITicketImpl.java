@@ -15,5 +15,11 @@ public interface ITicketImpl {
      */
     Ticket getTicketByPnrNo(String pnrNo, Boolean status);
 
+    /**
+     * PNrt numarasına göre bileti siler. Su anda kaydı tamamen siliyor.
+     * İstege göre kayıt pasife cekilerek de yapılabilirdi.Fakat o updanin aynısı olduug için delete yazıldı.
+     * @param pnr
+     * @return
+     */
     Boolean deleteTicket(String pnr);
 }

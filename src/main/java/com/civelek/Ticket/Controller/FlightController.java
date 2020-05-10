@@ -44,7 +44,6 @@ public class FlightController {
 
     @GetMapping("/getFlight")
     @ResponseBody
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss.SSSSSS")
     public void getFlight(HttpServletRequest request, HttpServletResponse response) throws IOException{
         String departaure = VTUtil.reqGetString(request.getParameter("departaure"),null);
         String arrival = VTUtil.reqGetString(request.getParameter("arrival"),null);
