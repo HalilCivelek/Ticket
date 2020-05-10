@@ -41,8 +41,9 @@ public class TicketController {
     @ResponseBody
     public void getTicketByPnrNo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String pnr = VTUtil.reqGetString(request.getParameter("pnr"),null);
+        Boolean status = VTUtil.reqGetBoolean(request.getParameter("status"),null);
         JSONObject sendJson = new JSONObject();
-        Ticket ticket = iTicketImpl.getTicketByPnrNo(pnr);
+        Ticket ticket = iTicketImpl.getTicketByPnrNo(pnr, status);
 
         sendJson.put("ticket",ticket);
         response.getWriter().write(sendJson.toString());

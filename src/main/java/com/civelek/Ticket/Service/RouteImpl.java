@@ -23,7 +23,6 @@ public class RouteImpl implements IRouteImpl {
 
     public Route saveRoute( Route route){
 
-
         Route newRoute = new Route();
         Airport deperture = new Airport();
         Airport arrival = new Airport();
@@ -32,9 +31,6 @@ public class RouteImpl implements IRouteImpl {
 
             throw  new IllegalArgumentException("rota belirlerken havaalanı bilgisi bos gecilemez.");
         }else if(route.getArrivalId() != null && route.getDepartureId() != null){
-
-          /*  deperture = airportRepository.getByAirportName(route.getDepartureId().getAirportName());
-            arrival = airportRepository.getByAirportName(route.getArrivalId().getAirportName());*/
 
             if(deperture != null && arrival != null){
                 newRoute.setDepartureId(route.getDepartureId());

@@ -1,4 +1,4 @@
-package com.civelek.Ticket.config;
+/*package com.civelek.Ticket.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -18,4 +18,4 @@ public class DatabaseConfig {
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
     }
-}
+}*/

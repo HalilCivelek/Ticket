@@ -4,10 +4,13 @@ import com.civelek.Ticket.Entity.Customer;
 import com.civelek.Ticket.Entity.Flight;
 import com.civelek.Ticket.Entity.Route;
 import com.civelek.Ticket.Entity.Ticket;
+import javassist.NotFoundException;
 import net.minidev.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.Date;
@@ -19,55 +22,44 @@ public class TicketDAO {
     @PersistenceContext
     protected EntityManager entityManager;
 
+    @Autowired
+    private TicketRepository ticketRepository;
+
+
     public EntityManager getEntityManager(){
         return entityManager;
     }
 
-    public Ticket getTicketByPnrNo(String pnr){
+    public Ticket getTicketByPnrNo(String pnr, Boolean status){
+  try {
+      StringBuilder hql = new StringBuilder();
 
-        StringBuilder hql = new StringBuilder();
+      hql.append("select t as pnr from Ticket t ");
+      hql.append(" where 1 = 1 ");
 
-        hql.append("select t as pnr from Ticket t ");
-        hql.append(" where t.pnr =:pnrNo ");
+      if (status != null) {
+          hql.append(" and t.status =:status ");
+      }
 
-        Query query = entityManager.createQuery(hql.toString());
+      if (pnr != null) {
+          hql.append(" and t.pnr =:pnr ");
+      }
 
-        query.setParameter("pnrNo", pnr);
+      Query query = entityManager.createQuery(hql.toString());
 
-        return (Ticket) query.getSingleResult();
-    }
-
-
-    public String getTicketByPnrNoToString(String pnr){
-
-        StringBuilder hql = new StringBuilder();
-
-        hql.append("select t.customer.name as name from Ticket t ");
-        hql.append(" where t.pnr =:pnrNo ");
-
-        Query query = entityManager.createQuery(hql.toString());
-
-        query.setParameter("pnrNo", pnr);
-
-        return  query.getSingleResult().toString();
-    }
+      if (status != null) {
+          query.setParameter("status", status);
+      }
+      if (pnr != null) {
+          query.setParameter("pnr", pnr);
+      }
 
 
-    public JSONObject getTicketByPnrNoToJson(String pnr){
-
-        StringBuilder hql = new StringBuilder();
-        JSONObject jsonObject =new JSONObject();
-
-        hql.append("select t.customer.name as name from Ticket t ");
-        hql.append(" where t.pnr =:pnrNo ");
-
-        Query query = entityManager.createQuery(hql.toString());
-
-        query.setParameter("pnrNo", pnr);
-
-        jsonObject.put("data",query.getSingleResult());
-
-        return  jsonObject;
+      return (Ticket) query.getSingleResult();
+  }catch (NoResultException e){
+      e.getMessage();
+  }
+  return  null;
     }
 
     public List<Flight> getFlight(String company, String departaure, String arrival, Date departureDate, Date arrivalDate){

@@ -129,10 +129,10 @@ public class TicketImpl implements ITicketImpl {
      * @return
      */
     @Override
-    public Ticket getTicketByPnrNo(String pnrNo){
+    public Ticket getTicketByPnrNo(String pnrNo, Boolean status){
         Ticket ticket = null;
         if (pnrNo != null && !pnrNo.equalsIgnoreCase("")) {
-            ticket = ticketDAO.getTicketByPnrNo(pnrNo);
+            ticket = ticketDAO.getTicketByPnrNo(pnrNo, status);
         }
         return ticket;
     }
@@ -140,7 +140,7 @@ public class TicketImpl implements ITicketImpl {
     @Override
     public Boolean deleteTicket(String pnr) {
 
-        Ticket ticket = ticketRepository.getByPnrNoAndStatus2(pnr);
+        Ticket ticket = ticketRepository.getByPnrAndStatus(pnr, true);
 
          if(ticket != null){
 
@@ -149,18 +149,6 @@ public class TicketImpl implements ITicketImpl {
          }
 
         return false;
-    }
-
-    @Override
-    public String getTicketByPnrNoToString(String pnr) {
-        String ticket = ticketDAO.getTicketByPnrNoToString(pnr);
-        return ticket;
-    }
-
-    @Override
-    public JSONObject getTicketByPnrNoToJson(String pnr) {
-        JSONObject ticket = ticketDAO.getTicketByPnrNoToJson(pnr);
-        return ticket;
     }
 
     public  String createPnr(int counter) {

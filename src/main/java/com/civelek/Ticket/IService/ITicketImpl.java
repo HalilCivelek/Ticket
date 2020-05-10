@@ -13,11 +13,7 @@ public interface ITicketImpl {
      * @param pnrNo
      * @return
      */
-    Ticket getTicketByPnrNo(String pnrNo);
+    Ticket getTicketByPnrNo(String pnrNo, Boolean status);
 
     Boolean deleteTicket(String pnr);
-
-    String getTicketByPnrNoToString(String pnr);
-
-    JSONObject getTicketByPnrNoToJson(String pnr);
 }
